@@ -63,5 +63,4 @@ class ParametersForm(FlaskForm):
         ('Германия', 'Германия'),
         ('Китай', 'Китай')
     ], default='Не задана')
-    sex = RadioField('Пол', choices=[('м', 'Мужской'), ('ж', 'Женский'), ('любой', 'Любой')], default='любой')
     submit = SubmitField('Отсортировать')
