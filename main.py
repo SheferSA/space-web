@@ -29,7 +29,7 @@ def sort_profiles(parameter):  # сортируем анкеты по праме
         if ((parameter.age_from == '' or int(user.age) >= int(parameter.age_from))
                 and (parameter.age_to == '' or int(user.age) <= int(parameter.age_to))
                 and (parameter.country == 'Не задана' or user.country == parameter.country)
-                and (parameter.sex == 'любой' or user.sex == parameter.sex)):
+                and (parameter.sex == 'Любой' or user.sex == parameter.sex)):
             profiles_list.append(user)
 
     return profiles_list
