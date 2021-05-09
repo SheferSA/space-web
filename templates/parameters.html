@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style type="text/css">
+    h2 {color: blue;}
+    p.display-3 {padding-top:50px;
+     color:grey;}
+    p.display-4 {color: red; padding: 150px}
+   form {margin:0 80px;}
+
+
+
+</style>
+<div class='content1'>
+    <p class="display-3" align="center">Поиск по параметрам</p>
+    {% if current_user.is_authenticated %}
+    <h2 align="center">Укажи параметры поиска.</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.age_from.label }}<br>
+            {{ form.age_from(class="form-control", type="number") }}<br>
+        </p>
+        <p>
+            {{ form.age_to.label }}<br>
+            {{ form.age_to(class="form-control", type="number") }}<br>
+        </p>
+        <p>
+            {{ form.country(class="form-control")}}
+        </p>
+        <p>
+        <p>Sex</p>
+        {% for subfield in form.sex %}
+        <p>{{ subfield }} {{ subfield.label }}</p>
+        {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+    <p class="message">{{ message }}</p>
+    {% else %}
+    <p class="display-4" align="center">Войди в учетную запись,
+        чтобы выбрать параметры для запроса.</p>
+    {% endif %}
+</div>
+{% endblock %}

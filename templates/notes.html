@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style type="text/css">
+    h2 {margin: 0 150px;
+    color: blue;}
+    p.display-3 {padding-top:50px;
+     color:grey;}
+    form {margin:20px 80px;}
+    div.note {margin:30px 60px;border: 7px solid #6198ff;}
+    h5 {padding: 10px 10px}
+    p {padding: 10px 10px}
+
+</style>
+<div class='content1'>
+    <p class="display-3" align="center">Notes</p>
+    {% if current_user.is_authenticated %}
+    <h2>На этой странице записывай свои мысли и впечатления</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.header.label }}<br>
+            {{ form.header(class="form-control") }}<br>
+        </p>
+        <p>
+            {{ form.note.label }}<br>
+            {{ form.note(class="form-control", type="textarea") }}<br>
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+    {% for i in notes %}
+    <div class="note">
+        <h5>{{i.header}}</h5>
+        <p>{{i.note}}</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="display-4" style="color: red; padding: 150px 175px;">Войди, чтобы добавить свои заметки.</p>
+    {% endif %}
+</div>
+{% endblock %}

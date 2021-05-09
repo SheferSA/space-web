@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style type="text/css">
+    h5 {color: #0046c7;
+    margin: 0 30px;}
+    p.display-3 {padding-top:50px; color:grey;}
+    p.display-4 {color: grey;}
+    h4 {color: #0046c7;
+    margin: 10px 30px;}
+    p {margin: 10px 40px;}
+    h3 {margin: 30px 30px;}
+    form {margin: 20px 40px;}
+    div.request {margin:30px 0;
+    border: 7px solid #6198ff;
+    width: 1000px;}
+    div.requests {border: 7px solid #6198ff;
+    width: 1000px;}
+</style>
+<div class='content1'>
+    <p class="display-3" align="center">Друзья</p>
+    <div class='requests'>
+        <p class="display-4">Запросы</p>
+    </div>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.request_id.label }}<br>
+            {{ form.request_id(class="form-control", type="number") }}<br>
+            {% for error in form.request_id.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p style="padding: 10px 0">Введи номер запроса, который ты хочешь принять.</p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+    <p class="message">{{ message }}</p>
+    {% for i in requests_list: %}
+    <div class='request'>
+        <h4>{{i[0]}}</h4>
+        <h3>{{i[1].name}} {{i[1].surname}}</h3>
+        <h5>Возраст: </h5>
+        <p>{{i[1].age}}</p>
+        <h5>Страна: </h5>
+        <p>{{i[1].country}}</p>
+        <h5>Пол: </h5>
+        <p>{{i[1].sex}}</p>
+        <h5>О себе: </h5>
+        <p>{{i[1].bio}}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

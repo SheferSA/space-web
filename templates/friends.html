@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style type="text/css">
+    h5 {color: #0046c7;
+    margin: 0 30px;}
+    h3 {margin: 30px 30px;}
+    p.display-4 {margin: 0;
+    color: grey;}
+    p {margin: 10px 30px;}
+    p.display-3 {padding-top: 50px;
+     color:grey;}
+    div.profile {border: 7px solid #6198ff;
+    padding: 10px 10px;
+    width: 200px;
+    margin: 0 20px;}
+    div.friend {margin:30px auto;
+    border: 7px solid #f5f5f5;
+    width: 700px;}
+    div.friends {border: 7px solid #6198ff;
+    margin: 10px 5px;
+    padding: 10px 20px}
+    div.requests {border: 7px solid #6198ff;
+    width: 770px;}
+
+
+
+</style>
+<div class="content1">
+    <p class="display-3" align="center">Друзья</p>
+    {% if current_user.is_authenticated %}
+    <div class="form-group row">
+        <div class='profile'>
+            <p class="display-4" align="center">Профиль</p>
+            <p>Опубликуй свой профиль, и другие пользователи увидят его.</p>
+            {% if user_id in profs %}
+            <form action="" method="post">
+                {{ form_delete.hidden_tag() }}
+                <p style='margin: 0 10px;'>{{ form_delete.submit(type="submit", class="btn btn-primary") }}</p>
+            </form>
+            {% else %}
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p style='margin: 0 10px;'>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+            </form>
+            {% endif %}
+        </div>
+        <div class='requests'>
+            <a class="display-4" href="/friends/requests" style="padding:0 50px; color: grey;">Запросы</a>
+            <p style="padding: 20px 10px;">Кликни, чтобы увидеть запросы.</p>
+        </div>
+    </div>
+    <div class='friends'>
+        <p class="display-4">Друзья</p>
+        <p>Чтобы подружиться, нужно отправить свой запрос или подтвердить пришедший тебе.
+            Связаться с человеком можно, получив его адрес электронной почты.</p>
+        {% for i in friends %}
+        <div class="friend">
+            <h3>{{i.name}} {{i.surname}}</h3>
+            <h5>Возраст: </h5>
+            <p>{{i.age}}</p>
+            <h5>Страна: </h5>
+            <p>{{i.country}}</p>
+            <h5>Пол: </h5>
+            <p>{{i.sex}}</p>
+            <h5>О себе: </h5>
+            <p>{{i.bio}}</p>
+            <h5>E-mail: </h5>
+            <p>{{i.email}}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="display-4" style="color: red; padding: 100px 240px;">Войди в свой профиль, чтобы добавить друзей.</p>
+    {% endif %}
+</div>
+{% endblock %}

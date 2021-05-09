@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <title>{{ title }}</title>
+</head>
+<body background="https://i.sunhome.ru/journal/179/zemlya-golubaya-planeta.orig.jpg">
+<style type="text/css">
+    p.message {color: red;
+    margin: 20px 70px;}
+    div.content1 {margin:0 auto;
+    width: 1000px;
+    min-height: 750px;
+    background-color: white;
+    padding: 5px 0px;
+      }
+
+</style>
+<nav class="navbar navbar-expand-lg fixed-top bg-primary navbar-dark">
+    <a class="navbar-brand" href="https://russianspacetourist.herokuapp.com/">Главная</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+        <ul class="navbar-nav mr-4">
+            {% if current_user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="https://russianspacetourist.herokuapp.com/logout">Выход</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="https://russianspacetourist.herokuapp.com/register">Регистрация</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link " href="https://russianspacetourist.herokuapp.com/login">Вход</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="https://russianspacetourist.herokuapp.com/friends">Друзья</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="https://russianspacetourist.herokuapp.com/notes">Заметки</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="https://russianspacetourist.herokuapp.com/parameters">Поиск</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% block content %}{% endblock %}
+</body>
+</html>

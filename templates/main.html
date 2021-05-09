@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style type="text/css">
+    h5 {color: #0046c7;
+    margin: 0 30px;}
+    p {margin: 20px 40px;}
+    form {margin: 20px 30px;}
+    h3 {margin: 30px 30px;}
+    h4 {color: #0046c7;
+    margin: 10px 30px;}
+
+</style>
+<div class='content1'>
+    <p class="display-3" align="center" style='padding-top:50px; color:grey;'>RussianSpaceTourist</p>
+    {%if current_user.is_authenticated%}
+    <h4>Привет, {{current_user.name}} {{current_user.surname}}</h4>
+    {% else %}
+    <h4>Мы не знаем, как тебя зовут... Ты не вошел в свой профиль.</h4>
+    {% endif %}
+    <div id='inform' style='border: 7px solid #6198ff; width: 1000px;'>
+        <p style="padding:0 50px; color: black;">Привет! Если ты здесь, значит, ты готов к космическим путешествиям!
+            Но, согласись, очень скучно смотреть в окно иллюминатора в одиночку.
+            Поэтому здесь для тебя есть возможность подобрать попутчика по интересам, из любой страны.
+            Дружи, узнавай много нового о своих будущих попутчиках, покори Вселенную!
+
+            Обязательное условие — общаемся только на русском языке,
+            из какой бы страны ты ни был.
+        </p>
+    </div>
+    <div id="profiles">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.profile_id.label }}<br>
+                {{ form.profile_id(class="form-control", type="number") }}<br>
+                {% for error in form.profile_id.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+            </p>
+            <p>Введи ID профиля друга, чтобы послать запрос.</p>
+            <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        </form>
+        <p class="message">{{ message }}</p>
+        {% for i in profs: %}
+        <div style='margin:30px 0;border: 7px solid #6198ff; width: 1000px;'>
+            <h4>{{i[0].id}}</h4>
+            <h3>{{i[1].name}} {{i[1].surname}}</h3>
+            <h5>Возраст: </h5>
+            <p>{{i[1].age}}</p>
+            <h5>Страна: </h5>
+            <p>{{i[1].country}}</p>
+            <h5>Пол: </h5>
+            <p>{{i[1].sex}}</p>
+            <h5>О себе: </h5>
+            <p>{{i[1].bio}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
