@@ -29,7 +29,7 @@ class RegisterForm(FlaskForm):
     surname = StringField('Фамилия', validators=[DataRequired()])
     age = StringField('Возраст', validators=[DataRequired()])
     country = SelectField('Страна', choices=[
-        ('Не задана', 'На задана'),
+        ('Не задана', 'Не задана'),
         ('Россия', 'Россия'),
         ('США', 'США'),
         ('Германия', 'Германия'),
