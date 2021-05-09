@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class='content1'>
-    <p class="display-3" align="center" style='padding-top:50px; color:grey;'>Register Form</p>
+    <p class="display-3" align="center" style='padding-top:50px; color:grey;'>Регистрация</p>
     <form action="" method="post" style="margin: 0 70px">
         {{ form.hidden_tag() }}
         <p>
@@ -45,7 +45,7 @@
             {{ form.country(class="form-control")}}
         </p>
         <p>
-        <p>Sex</p>
+        <p>Пол</p>
         {% for subfield in form.sex %}
         <p>{{ subfield }} {{ subfield.label }}</p>
         {% endfor %}
