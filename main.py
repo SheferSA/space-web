@@ -28,8 +28,8 @@ def sort_profiles(parameter):  # сортируем анкеты по праме
         user = profile[1]
         if ((parameter.age_from == '' or int(user.age) >= int(parameter.age_from))
                 and (parameter.age_to == '' or int(user.age) <= int(parameter.age_to))
-                and (parameter.country == 'Is not specified' or user.country == parameter.country)
-                and (parameter.sex == 'all' or user.sex == parameter.sex)):
+                and (parameter.country == 'Не задана' or user.country == parameter.country)
+                and (parameter.sex == 'любой' or user.sex == parameter.sex)):
             profiles_list.append(user)
 
     return profiles_list
@@ -52,7 +52,7 @@ def index():
 
         if not current_user.is_authenticated:  # не можем отправить запрос если не известен отправитель
             return render_template('main.html', form=form,
-                                   title="Home",
+                                   title="Главная",
                                    profs=profiles_list,
                                    message="Запрос не может быть отправлен"
                                    )
@@ -62,49 +62,49 @@ def index():
                 profiles.Profiles.id == form.profile_id.data).first().user_id
         except AttributeError:  # если не получается, значит анкеты не существует
             return render_template('main.html', form=form,
-                                   title="Home page",
+                                   title="Главная",
                                    profs=profiles_list,
-                                   message="Profile does not exist")
+                                   message="Такого профиля не существует")
 
         if current_user.id != user_recipient:  # проверяем, чтобы запрос не отправить самому себе
             for request in session.query(requests.Requests):
                 if [request.user_sender, request.user_recipient] == [current_user.id,
                                                                      user_recipient]:  # если запрос уже отправлен
                     return render_template('main.html', form=form,
-                                           title="Home page",
+                                           title="Главная",
                                            profs=profiles_list,
-                                           message="Request has already been sent")
+                                           message="Запрос уже отправлен")
 
             for friend in session.query(friends_db.Friends).filter(friends_db.Friends.user_id == current_user.id):
                 if friend.friend_id == session.query(profiles.Profiles).filter(
                         profiles.Profiles.id == form.profile_id.data).first().user_id:  # если уже в друзьях
                     return render_template('main.html', form=form,
-                                           title="Home page",
+                                           title="Главная",
                                            profs=profiles_list,
-                                           message="Request could not be sent")
+                                           message="Пользователь уже в друзьях")
 
             for request in session.query(requests.Requests).filter(requests.Requests.user_recipient == current_user.id):
                 if request.user_sender == session.query(profiles.Profiles).filter(
                         profiles.Profiles.id == form.profile_id.data).first().user_id:
                     # нам уже отправил запрос этот пользователь
                     return render_template('main.html', form=form,
-                                           title="Home page",
+                                           title="Главная",
                                            profs=profiles_list,
-                                           message="Check your requests.")
+                                           message="Проверь свои запросы")
 
             request.user_sender = current_user.id
             request.user_recipient = user_recipient
             session.add(request)
             session.commit()
             return render_template('main.html', form=form,
-                                   title="Home page",
+                                   title="Главная",
                                    profs=profiles_list)
         return render_template('main.html', form=form,
-                               title="Home page",
+                               title="Главная",
                                profs=profiles_list,
-                               message="Request could not be sent"
+                               message="Запрос не может быть отправлен"
                                )
-    return render_template('main.html', title='Home page',
+    return render_template('main.html', title='Главная',
                            profs=profiles_list, form=form)
 
 
@@ -124,8 +124,8 @@ def friends_requests():  # принять запрс в друзья
                 requests.Requests.id == form.request_id.data).first().user_sender
         except AttributeError:
             return render_template('requests.html',
-                                   title="Requests", form=form,
-                                   requests_list=requests_list, message='Request does not exist')
+                                   title="Запросы", form=form,
+                                   requests_list=requests_list, message='Запрос не существует')
         session.add(friend)
         session.delete(session.query(requests.Requests).filter(
             requests.Requests.id == form.request_id.data).first())  # удаляем запрос
@@ -136,10 +136,10 @@ def friends_requests():  # принять запрс в друзья
                 requests_list.append(
                     [request.id, session.query(users.User).filter(users.User.id == request.user_sender).first()])
         return render_template('requests.html',
-                               title="Requests", form=form,
+                               title="Запросы", form=form,
                                requests_list=requests_list)
     return render_template('requests.html',
-                           title="Requests", form=form,
+                           title="Запросы", form=form,
                            requests_list=requests_list)
 
 
@@ -152,7 +152,7 @@ def friends():
 
     if not current_user.is_authenticated:
         return render_template('friends.html',
-                               title="Friends")
+                               title="Друзья")
 
     for friend in session.query(friends_db.Friends).filter(
             friends_db.Friends.user_id == current_user.id):  # список друзей
@@ -176,7 +176,7 @@ def friends():
         for profile in session.query(profiles.Profiles):
             profs_list.append(profile.user_id)
     return render_template('friends.html', form=form,
-                           title="Friends", profs=profs_list,
+                           title="Друзья", profs=profs_list,
                            user_id=current_user.id, form_delete=form_delete,
                            friends=friends_list)
 
@@ -191,8 +191,8 @@ def sign_in():  # вход
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
         return render_template('sign_in.html',
-                               title="Sign in",
-                               message="Wrong password or login!(You may not be registered)",
+                               title="Вход",
+                               message="Неправильный логин или пароль",
                                form=form)
     return render_template('sign_in.html', form=form, title='Sign in')
 
@@ -285,5 +285,5 @@ def parameters_func():  # ставим параметры поиска
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    # app.run(port=port, host='0.0.0.0')
-    app.run(port=8083, host='127.0.0.1', debug=True)
+    app.run(port=port, host='0.0.0.0')
+    # app.run(port=8083, host='127.0.0.1', debug=True)
