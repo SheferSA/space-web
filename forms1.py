@@ -57,7 +57,7 @@ class ParametersForm(FlaskForm):
     age_from = StringField('Возраст от...')
     age_to = StringField('Возраст до...')
     country = SelectField('Страна', choices=[
-        ('Не задана', 'На задана'),
+        ('Не задана', 'Не задана'),
         ('Россия', 'Россия'),
         ('США', 'США'),
         ('Германия', 'Германия'),

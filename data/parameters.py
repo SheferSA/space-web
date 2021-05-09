@@ -13,6 +13,5 @@ class Parameter(SqlAlchemyBase, UserMixin):
     age_from = sqlalchemy.Column(sqlalchemy.Integer)
     age_to = sqlalchemy.Column(sqlalchemy.Integer)
     country = sqlalchemy.Column(sqlalchemy.String)
-    sex = sqlalchemy.Column(sqlalchemy.String)
 
     user = orm.relation('User')
