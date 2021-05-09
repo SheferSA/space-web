@@ -25,13 +25,14 @@
             {{ form.age_to.label }}<br>
             {{ form.age_to(class="form-control", type="number") }}<br>
         </p>
+        <p>Страна</p>
         <p>
             {{ form.country(class="form-control")}}
         </p>
         <p>
-        <p>Пол</p>
+       <!-- <p>Пол</p>
         {% for subfield in form.sex %}
-        <p>{{ subfield }} {{ subfield.label }}</p>
+        <p>{{ subfield }} {{ subfield.label }}</p> -->
         {% endfor %}
         </p>
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>

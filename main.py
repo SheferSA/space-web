@@ -28,8 +28,8 @@ def sort_profiles(parameter):  # сортируем анкеты по праме
         user = profile[1]
         if ((parameter.age_from == '' or int(user.age) >= int(parameter.age_from))
                 and (parameter.age_to == '' or int(user.age) <= int(parameter.age_to))
-                and (parameter.country == 'Не задана' or user.country == parameter.country)
-                and (parameter.sex == 'Любой' or user.sex == parameter.sex)):
+                and (parameter.country == 'Не задана' or user.country == parameter.country)):
+               # and (parameter.sex == 'Любой' or user.sex == parameter.sex)):
             profiles_list.append(user)
 
     return profiles_list
@@ -194,7 +194,7 @@ def sign_in():  # вход
                                title="Вход",
                                message="Неправильный логин или пароль",
                                form=form)
-    return render_template('sign_in.html', form=form, title='Sign in')
+    return render_template('sign_in.html', form=form, title='Вход')
 
 
 @app.route('/logout')
@@ -255,7 +255,7 @@ def notes_func():  # добавляем заметки
         notes_list = []  # обновляем список заметок
         for note in session.query(notes.Note).filter(notes.Note.user_id == current_user.id):
             notes_list.append(note)
-    return render_template('notes.html', title="Notes", form=form,
+    return render_template('notes.html', title="Заметки", form=form,
                            notes=notes_list)
 
 
